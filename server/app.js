@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
+const session = require('express-session');
 
 // Import custom files
 const router = require('./router.js');
@@ -33,6 +34,13 @@ app.use(compression()); // compresses/minifies the data being sent and received
 app.use(bodyParser.urlencoded({
   extended: true,
 })); // gives app ability to parse urlencoded data
+
+app.use(session({
+  key: 'sessionid',
+  secret: 'Domo Arigato',
+  resave: true,
+  saveUninitialized: true,
+})); // setup the session (the cookies used to keep track of user sessions)
 
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' })); // hook up handlebars
 app.set('view engine', 'handlebars'); // also hooks up express with handlebars

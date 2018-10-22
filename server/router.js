@@ -13,6 +13,7 @@ const router = (app) => {
 	// POST
   app.post('/login', controllers.Account.login);
   app.post('/signup', controllers.Account.signup);
+  app.post('/maker', controllers.Domo.make);
 };
 
 // Export the function to use in app.js

@@ -16,6 +16,8 @@ const signupPage = (req, res) => {
 
 // Function to display the home page when a user logs out
 const logout = (req, res) => {
+	// Remove a user's sessions so that the server knows the user isn't logged in
+  req.session.destroy();
   res.redirect('/');
 };
 
@@ -39,6 +41,9 @@ const login = (request, response) => {
     if (err || !account) {
       return res.status(401).json({ error: 'Wrong username or password' });
     }
+
+	// Store user account information in the session
+    req.session.account = Account.AccountModel.toAPI(account);
 
     return res.json({ redirect: '/maker' });
   });
@@ -80,6 +85,9 @@ const signup = (request, response) => {
 
 		// Set what to do when the save is complete
     savePromise.then(() => {
+		// Store user account information in the session
+      req.session.account = Account.AccountModel.toAPI(newAccount);
+
       res.json({ redirect: '/maker' });
     });
 
